@@ -14,7 +14,7 @@
 
     :root {
       --black:       #111111;
-      --white:       #faf8f4;
+      --white:       #f5f0e8;
       --green:       #2B4A3E;
       --gold:        #C9A84C;
       --pink:        #e8437a;
@@ -143,7 +143,7 @@
     /* ── Hero ── */
     .hero {
       max-width: 680px;
-      margin: 64px auto 0;
+      margin: 72px auto 0;
       padding: 0 24px;
       text-align: center;
       position: relative;
@@ -162,44 +162,41 @@
     }
 
     .eyebrow {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 4px;
+      letter-spacing: 5px;
       text-transform: uppercase;
-      color: var(--pink);
-      margin-bottom: 16px;
+      color: var(--grey);
+      margin-bottom: 24px;
+      opacity: 0.75;
     }
 
     .hero h1 {
       font-family: var(--serif);
-      font-size: clamp(42px, 8vw, 74px);
+      font-size: clamp(48px, 9vw, 86px);
       font-weight: 900;
-      line-height: 1.04;
-      margin-bottom: 8px;
+      line-height: 1.0;
+      margin-bottom: 0;
+      letter-spacing: -0.5px;
+    }
+
+    /* "Join the" — lighter weight, smaller, black */
+    .hero h1 .h1-top {
+      display: block;
+      font-size: clamp(26px, 4.5vw, 46px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--grey);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
     }
 
     .hero h1 em { font-style: italic; color: var(--pink); }
 
-    /* Animated pink underline under the italic */
+    /* No underline — italic colour only */
     .hero h1 em {
-      position: relative;
-      display: inline-block;
-    }
-
-    .hero h1 em::after {
-      content: '';
-      position: absolute;
-      left: 0; bottom: 2px;
-      width: 100%; height: 4px;
-      background: linear-gradient(90deg, var(--pink), #ff8fb1, var(--pink));
-      background-size: 200%;
-      border-radius: 2px;
-      animation: shimmer 2.5s linear infinite;
-    }
-
-    @keyframes shimmer {
-      0%   { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
+      font-style: italic;
+      color: var(--pink);
     }
 
     /* Floating decorative hearts around hero */
@@ -231,17 +228,19 @@
     }
 
     .hero-sub {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--grey);
-      max-width: 450px;
-      margin: 20px auto 26px;
-      line-height: 1.8;
+      max-width: 420px;
+      margin: 28px auto 32px;
+      line-height: 1.85;
+      font-weight: 300;
+      opacity: 0.85;
     }
 
     .hero-prompt {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--pink);
       animation: pulse 2s ease-in-out infinite;
@@ -331,28 +330,27 @@
     /* Headline uses same hero h1 styles — just scoped under .arch-body */
     .arch-body h1 {
       font-family: var(--serif);
-      font-size: clamp(42px, 8vw, 74px);
+      font-size: clamp(48px, 9vw, 86px);
       font-weight: 900;
-      line-height: 1.04;
+      line-height: 1.0;
       margin-bottom: 8px;
+      letter-spacing: -0.5px;
     }
 
     .arch-body h1 em {
       font-style: italic;
       color: var(--pink);
-      position: relative;
-      display: inline-block;
     }
 
-    .arch-body h1 em::after {
-      content: '';
-      position: absolute;
-      left: 0; bottom: 2px;
-      width: 100%; height: 4px;
-      background: linear-gradient(90deg, var(--pink), #ff8fb1, var(--pink));
-      background-size: 200%;
-      border-radius: 2px;
-      animation: shimmer 2.5s linear infinite;
+    /* "Join the" lead-in — lighter, smaller, grey */
+    .arch-body h1 .h1-top {
+      display: block;
+      font-size: clamp(26px, 4.5vw, 46px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--grey);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
     }
 
     @media (max-width: 600px) {
@@ -842,11 +840,6 @@
     </div>
   </header>
 
-  <!-- ── Second hearts strip (below header) ── -->
-  <div class="hearts-strip">
-    ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥
-  </div>
-
   <!-- ── Hero ── -->
   <section class="arch-body">
 
@@ -868,7 +861,7 @@
 
     <p class="eyebrow">Melbourne · Podcast &amp; Media</p>
 
-    <h1>Join the<br /><em>Curious Club.</em></h1>
+    <h1><span class="h1-top">Join the</span><em>Curious Club.</em></h1>
 
     <p class="hero-sub">
       We go beyond the highlights — exploring the thinking, failures, habits,
@@ -915,7 +908,7 @@
         <li>Professional photos</li>
         <li>Content to reuse</li>
       </ul>
-      <a class="btn btn-pink" href="https://tally.so/r/REPLACE_GUEST_FORM" target="_blank">
+      <a class="btn btn-pink" href="https://tally.so/r/eqGNZl" target="_blank">
         Apply as a Guest →
       </a>
     </div>
@@ -936,7 +929,7 @@
         <li>Networking opportunities</li>
         <li>Recommendation for standouts</li>
       </ul>
-      <a class="btn" href="https://tally.so/r/REPLACE_CREW_FORM" target="_blank">
+      <a class="btn" href="https://tally.so/r/44Y17X" target="_blank">
         Join the Crew →
       </a>
     </div>
@@ -957,7 +950,7 @@
         <li>Venue partnerships</li>
         <li>Affiliate opportunities</li>
       </ul>
-      <a class="btn" href="https://tally.so/r/REPLACE_PARTNER_FORM" target="_blank">
+      <a class="btn" href="https://tally.so/r/jar0g4" target="_blank">
         Partner With Us →
       </a>
     </div>
