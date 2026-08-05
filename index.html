@@ -1,125 +1,1146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Curious Club</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join The Curious Club</title>
+  <meta name="description" content="The Curious Club — Melbourne podcast exploring curious minds & bold ideas. Apply as a guest, join the media crew, or partner with us." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<style>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#faf7f5;
-color:#222;
-text-align:center;
-}
+    :root {
+      --black:       #111111;
+      --white:       #faf8f4;
+      --green:       #2B4A3E;
+      --gold:        #C9A84C;
+      --pink:        #e8437a;
+      --pink-mid:    #f06292;
+      --pink-light:  #fce4ec;
+      --pink-glow:   rgba(232, 67, 122, 0.18);
+      --grey:        #666;
+      --serif:       'Playfair Display', Georgia, serif;
+      --sans:        'Inter', system-ui, sans-serif;
+    }
 
-.hero{
-padding:100px 20px;
-max-width:900px;
-margin:auto;
-}
+    html { scroll-behavior: smooth; }
 
-h1{
-font-size:64px;
-margin-bottom:20px;
-}
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-p{
-font-size:22px;
-line-height:1.7;
-}
+    /* ── Background logo watermarks (top-left + bottom-right luxury framing) ── */
+    .bg-watermark {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.07;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 0 60px rgba(43,74,62,0.06));
+    }
 
-.button{
-display:inline-block;
-margin-top:40px;
-padding:16px 36px;
-background:black;
-color:white;
-text-decoration:none;
-border-radius:40px;
-font-size:20px;
-}
+    .bg-watermark svg { width: 100%; height: auto; display: block; }
 
-.section{
-padding:80px 20px;
-max-width:900px;
-margin:auto;
-}
+    /* Top-left — tilted outward, partially cropped */
+    .bg-watermark-tl {
+      top: -14%;
+      left: -10%;
+      width: min(58vw, 640px);
+      transform: rotate(16deg);
+    }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin-top:40px;
-}
+    /* Bottom-right — mirror tilt, partially cropped */
+    .bg-watermark-br {
+      bottom: -14%;
+      right: -10%;
+      width: min(58vw, 640px);
+      transform: rotate(-16deg);
+    }
 
-.card{
-background:white;
-padding:30px;
-border-radius:16px;
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
+    /* ── Heart canvas (pointer-events: none so it never blocks clicks) ── */
+    #heart-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
 
-footer{
-padding:60px;
-color:#777;
-}
+    /* ── Hearts strip ── */
+    .hearts-strip {
+      background: var(--black);
+      color: var(--pink);
+      font-size: 13px;
+      letter-spacing: 5px;
+      padding: 9px 0;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      user-select: none;
+    }
 
-</style>
+    /* ── Header ── */
+    header {
+      border-bottom: 3px double var(--black);
+      padding: 28px 32px 24px;
+      position: relative;
+    }
 
+    /* Pink shimmer line under header */
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      opacity: 0.5;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .logo-mark { width: 52px; height: 66px; flex-shrink: 0; }
+
+    .header-text { text-align: left; }
+
+    @media (max-width: 480px) {
+      .header-inner { flex-direction: column; }
+      .header-text  { text-align: center; }
+    }
+
+    .wordmark {
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: clamp(30px, 6.5vw, 60px);
+      color: var(--black);
+      line-height: 1;
+    }
+
+    .tagline {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-top: 6px;
+    }
+
+    .tagline span { color: var(--pink); margin: 0 5px; }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 680px;
+      margin: 64px auto 0;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    /* Soft pink radial glow behind hero text */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse at center, rgba(232,67,122,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(42px, 8vw, 74px);
+      font-weight: 900;
+      line-height: 1.04;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em { font-style: italic; color: var(--pink); }
+
+    /* Animated pink underline under the italic */
+    .hero h1 em {
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero h1 em::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 2px;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--pink), #ff8fb1, var(--pink));
+      background-size: 200%;
+      border-radius: 2px;
+      animation: shimmer 2.5s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* Floating decorative hearts around hero */
+    .hero-hearts {
+      position: relative;
+      height: 0;
+    }
+
+    .deco-heart {
+      position: absolute;
+      color: var(--pink);
+      opacity: 0;
+      animation: floatHeart 4s ease-in-out infinite;
+      font-size: 18px;
+      pointer-events: none;
+    }
+
+    .deco-heart:nth-child(1) { left: -60px;  top: -100px; animation-delay: 0s;    font-size: 14px; }
+    .deco-heart:nth-child(2) { right: -50px; top: -140px; animation-delay: 0.8s;  font-size: 22px; }
+    .deco-heart:nth-child(3) { left: -30px;  top: -60px;  animation-delay: 1.6s;  font-size: 10px; }
+    .deco-heart:nth-child(4) { right: -80px; top: -80px;  animation-delay: 2.4s;  font-size: 16px; }
+    .deco-heart:nth-child(5) { left: 20px;   top: -170px; animation-delay: 3.2s;  font-size: 12px; }
+
+    @keyframes floatHeart {
+      0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+      20%  { opacity: 0.7; }
+      80%  { opacity: 0.4; }
+      100% { opacity: 0; transform: translateY(-40px) scale(1.1); }
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--grey);
+      max-width: 450px;
+      margin: 20px auto 26px;
+      line-height: 1.8;
+    }
+
+    .hero-prompt {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--pink);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.55; }
+    }
+
+    /* ── Arch Hero (merged header + hero) ── */
+    .arch-hero {
+      position: relative;
+      max-width: 800px;
+      margin: 28px auto 0;
+      /* horizontal padding pushes content inside the arch sides */
+      padding: 0 clamp(24px, 6%, 64px);
+    }
+
+    /* SVG arch outline — stretches to fill section height, stroke stays crisp */
+    .arch-outline {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    /* Top wordmark band (sits above the horizontal dividing line) */
+    .arch-top {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 30px 12% 22px;
+    }
+
+    /* Horizontal rule inside the arch, between wordmark and hero body */
+    .arch-rule {
+      position: relative;
+      z-index: 1;
+      height: 1.5px;
+      background: var(--green);
+      margin: 0 3%;
+      /* subtle pink shimmer on the rule */
+      background: linear-gradient(90deg, var(--green) 70%, var(--pink) 100%);
+      opacity: 0.6;
+    }
+
+    /* Hero body — contains star, heading, sub, prompt */
+    .arch-body {
+      position: relative;
+      text-align: center;
+      max-width: 680px;
+      margin: 60px auto 0;
+      padding: 0 24px 80px;
+    }
+
+    /* Soft pink radial glow behind the hero body */
+    .arch-body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 620px; height: 400px;
+      background: radial-gradient(ellipse at center, rgba(232,67,122,0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Large gold star */
+    .arch-star {
+      margin-bottom: 14px;
+    }
+
+    .arch-star svg {
+      width: 54px;
+      height: 54px;
+      filter: drop-shadow(0 2px 14px rgba(201,168,76,0.38));
+      animation: starPulse 3.5s ease-in-out infinite;
+    }
+
+    @keyframes starPulse {
+      0%, 100% { filter: drop-shadow(0 2px 8px  rgba(201,168,76,0.32)); }
+      50%       { filter: drop-shadow(0 2px 26px rgba(201,168,76,0.72)); }
+    }
+
+    /* Headline uses same hero h1 styles — just scoped under .arch-body */
+    .arch-body h1 {
+      font-family: var(--serif);
+      font-size: clamp(42px, 8vw, 74px);
+      font-weight: 900;
+      line-height: 1.04;
+      margin-bottom: 8px;
+    }
+
+    .arch-body h1 em {
+      font-style: italic;
+      color: var(--pink);
+      position: relative;
+      display: inline-block;
+    }
+
+    .arch-body h1 em::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 2px;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--pink), #ff8fb1, var(--pink));
+      background-size: 200%;
+      border-radius: 2px;
+      animation: shimmer 2.5s linear infinite;
+    }
+
+    @media (max-width: 600px) {
+      .arch-top  { padding: 24px 8% 18px; }
+      .arch-body { padding: 36px 6% 60px; }
+    }
+
+    /* ── Divider ── */
+    .divider {
+      margin: 52px auto;
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: 10px;
+      color: var(--pink);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    /* ── Section heading ── */
+    .section-head {
+      text-align: center;
+      max-width: 540px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .section-head h2 {
+      font-family: var(--serif);
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    /* Pink accent bar under section heading */
+    .section-head h2::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--pink);
+      margin: 12px auto 0;
+      border-radius: 2px;
+    }
+
+    .section-head p { color: var(--grey); font-size: 15px; margin-top: 14px; }
+
+    /* ── Cards ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 620px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      border: 2px solid var(--black);
+      padding: 34px 28px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      overflow: hidden;
+    }
+
+    /* Pink shimmer on hover for light cards */
+    .card:not(.featured)::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, var(--pink-glow) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .card:not(.featured):hover::before { opacity: 1; }
+
+    .card:not(.featured):hover {
+      transform: translateY(-5px);
+      box-shadow: 6px 6px 0 var(--pink);
+      border-color: var(--pink);
+    }
+
+    .card.featured {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .card.featured:hover {
+      transform: translateY(-5px);
+      box-shadow: 6px 6px 0 var(--pink);
+    }
+
+    /* Pink top border accent on cards */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--pink);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover::after { transform: scaleX(1); }
+    .card.featured::after { transform: scaleX(1); background: var(--pink); }
+
+    .card-icon { font-size: 28px; margin-bottom: 14px; }
+
+    .card-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 8px;
+    }
+
+    .card h3 {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--grey);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .card.featured .card-desc { color: #aaa; }
+
+    .card-perks {
+      list-style: none;
+      margin-bottom: 28px;
+      flex-grow: 1;
+    }
+
+    .card-perks li {
+      font-size: 13px;
+      padding: 5px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .card-perks li:last-child { border-bottom: none; }
+
+    .card-perks li::before {
+      content: '♥';
+      color: var(--pink);
+      font-weight: 700;
+      flex-shrink: 0;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    .card.featured .card-perks li {
+      color: #ccc;
+      border-color: rgba(255,255,255,0.07);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: block;
+      padding: 14px 20px;
+      border: 2px solid var(--black);
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      color: var(--black);
+      background: transparent;
+      transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.15s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .btn-pink {
+      border-color: var(--pink);
+      background: var(--pink);
+      color: var(--white);
+    }
+
+    .btn-pink:hover {
+      background: #c73568;
+      border-color: #c73568;
+      color: var(--white);
+    }
+
+    .btn-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ── Pink banner strip ── */
+    .pink-banner {
+      background: var(--pink);
+      color: var(--white);
+      text-align: center;
+      padding: 14px 24px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .pink-banner .scroll-text {
+      display: inline-block;
+      animation: scrollLeft 18s linear infinite;
+    }
+
+    @keyframes scrollLeft {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── About strip ── */
+    .about {
+      background: var(--black);
+      color: var(--white);
+      padding: 72px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Pink corner accents */
+    .about::before {
+      content: '♥';
+      position: absolute;
+      top: 24px; left: 32px;
+      font-size: 48px;
+      color: var(--pink);
+      opacity: 0.15;
+    }
+
+    .about::after {
+      content: '♥';
+      position: absolute;
+      bottom: 24px; right: 32px;
+      font-size: 48px;
+      color: var(--pink);
+      opacity: 0.15;
+    }
+
+    .about h2 {
+      font-family: var(--serif);
+      font-size: clamp(24px, 4vw, 42px);
+      font-style: italic;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 22px;
+    }
+
+    /* Pink quote marks */
+    .about h2 { color: var(--white); }
+
+    .about p {
+      max-width: 540px;
+      margin: 0 auto 14px;
+      color: #bbb;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      max-width: 560px;
+      margin: 32px auto 0;
+    }
+
+    .tag {
+      border: 1px solid #444;
+      color: #bbb;
+      padding: 6px 16px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      cursor: default;
+    }
+
+    .tag:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+      background: rgba(232,67,122,0.08);
+    }
+
+    /* ── Social strip ── */
+    .social {
+      padding: 64px 24px;
+      text-align: center;
+      border-top: 1px solid #e0dbd3;
+      position: relative;
+    }
+
+    /* Pink hearts watermark */
+    .social::before {
+      content: '♥ ♥ ♥';
+      position: absolute;
+      top: 20px; left: 50%;
+      transform: translateX(-50%);
+      color: var(--pink);
+      font-size: 10px;
+      letter-spacing: 8px;
+      opacity: 0.4;
+    }
+
+    .social p {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 24px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 36px;
+      border: 2px solid var(--black);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.15s;
+    }
+
+    .social-link:hover {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 3px double var(--black);
+      padding: 20px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: 22px;
+    }
+
+    .footer-hearts {
+      color: var(--pink);
+      font-size: 14px;
+      letter-spacing: 4px;
+    }
+
+    .footer-info {
+      font-size: 10.5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 580px) {
+      footer { justify-content: center; }
+      .footer-info { text-align: center; }
+    }
+
+    /* ── Scroll-in animation for cards ── */
+    .card {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease,
+                  box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:nth-child(2) { transition-delay: 0.1s; }
+    .card:nth-child(3) { transition-delay: 0.2s; }
+    .card:nth-child(4) { transition-delay: 0.3s; }
+
+    /* Override hover transform once visible */
+    .card.visible:not(.featured):hover { transform: translateY(-5px); }
+    .card.visible.featured:hover       { transform: translateY(-5px); }
+  </style>
 </head>
-
 <body>
 
-<div class="hero">
+  <!-- Heart storm canvas -->
+  <canvas id="heart-canvas"></canvas>
 
-<h1>The Curious Club</h1>
+  <!-- Watermark top-left -->
+  <div class="bg-watermark bg-watermark-tl" aria-hidden="true">
+    <svg viewBox="0 0 200 255" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 22 255 L 22 108 A 78 78 0 0 1 178 108 L 178 255"
+            fill="none" stroke="#2B4A3E" stroke-width="18"
+            stroke-linejoin="round" stroke-linecap="round"/>
+      <polygon points="38,255 38,206 73,206 73,178 106,178 106,153 133,153 133,130 159,130 159,255"
+               fill="#2B4A3E"/>
+      <path d="M100,55 L104,74 L123,78 L104,82 L100,101 L96,82 L77,78 L96,74 Z"
+            fill="#C9A84C"/>
+    </svg>
+  </div>
 
-<p>
-Stay Curious.<br>
-Keep Learning.<br>
-Create Impact.
-</p>
+  <!-- Watermark bottom-right -->
+  <div class="bg-watermark bg-watermark-br" aria-hidden="true">
+    <svg viewBox="0 0 200 255" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 22 255 L 22 108 A 78 78 0 0 1 178 108 L 178 255"
+            fill="none" stroke="#2B4A3E" stroke-width="18"
+            stroke-linejoin="round" stroke-linecap="round"/>
+      <polygon points="38,255 38,206 73,206 73,178 106,178 106,153 133,153 133,130 159,130 159,255"
+               fill="#2B4A3E"/>
+      <path d="M100,55 L104,74 L123,78 L104,82 L100,101 L96,82 L77,78 L96,74 Z"
+            fill="#C9A84C"/>
+    </svg>
+  </div>
 
-<a class="button" href="#">
-Join The Curious Club
-</a>
+  <!-- ── Top hearts strip ── -->
+  <div class="hearts-strip">
+    ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥
+  </div>
 
-</div>
+  <!-- ── Header ── -->
+  <header>
+    <div class="header-inner">
+      <svg class="logo-mark" viewBox="0 0 200 255" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 22 255 L 22 108 A 78 78 0 0 1 178 108 L 178 255"
+              fill="none" stroke="#2B4A3E" stroke-width="18"
+              stroke-linejoin="round" stroke-linecap="round"/>
+        <polygon points="38,255 38,206 73,206 73,178 106,178 106,153 133,153 133,130 159,130 159,255"
+                 fill="#2B4A3E"/>
+        <path d="M100,55 L104,74 L123,78 L104,82 L100,101 L96,82 L77,78 L96,74 Z"
+              fill="#C9A84C"/>
+      </svg>
+      <div class="header-text">
+        <div class="wordmark">The Curious Club</div>
+        <div class="tagline">
+          Stay Curious <span>·</span> Keep Learning <span>·</span> Create Impact
+        </div>
+      </div>
+    </div>
+  </header>
 
-<div class="section">
+  <!-- ── Second hearts strip (below header) ── -->
+  <div class="hearts-strip">
+    ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥
+  </div>
 
-<h2>How would you like to get involved?</h2>
+  <!-- ── Hero ── -->
+  <section class="arch-body">
 
-<div class="cards">
+    <!-- Floating decorative hearts -->
+    <div class="hero-hearts">
+      <span class="deco-heart">♥</span>
+      <span class="deco-heart">♥</span>
+      <span class="deco-heart">♥</span>
+      <span class="deco-heart">♥</span>
+      <span class="deco-heart">♥</span>
+    </div>
 
-<div class="card">
-<h3>🎙 Become a Guest</h3>
-<p>Share your story and inspire thousands of curious people.</p>
-</div>
+    <!-- Gold 4-pointed star -->
+    <div class="arch-star" aria-hidden="true">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40,4 L44,30 L70,34 L44,38 L40,64 L36,38 L10,34 L36,30 Z" fill="#C9A84C"/>
+      </svg>
+    </div>
 
-<div class="card">
-<h3>🎥 Join the Media Crew</h3>
-<p>Filmmakers, editors, photographers, designers and storytellers welcome.</p>
-</div>
+    <p class="eyebrow">Melbourne · Podcast &amp; Media</p>
 
-<div class="card">
-<h3>🤝 Collaborate</h3>
-<p>Partner with us through events, sponsorships or creative projects.</p>
-</div>
+    <h1>Join the<br /><em>Curious Club.</em></h1>
 
-</div>
+    <p class="hero-sub">
+      We go beyond the highlights — exploring the thinking, failures, habits,
+      and decisions behind meaningful work.
+    </p>
+    <p class="hero-prompt">♥ Choose how you'd like to be involved ♥</p>
+  </section>
 
-</div>
+  <div class="divider">♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥</div>
 
-<footer>
+  <!-- ── Scrolling pink banner ── -->
+  <div class="pink-banner">
+    <span class="scroll-text">
+      PODCAST &nbsp;·&nbsp; MEDIA CREW &nbsp;·&nbsp; BRAND PARTNERS &nbsp;·&nbsp;
+      MELBOURNE &nbsp;·&nbsp; STAY CURIOUS &nbsp;·&nbsp; KEEP LEARNING &nbsp;·&nbsp;
+      CREATE IMPACT &nbsp;·&nbsp; PODCAST &nbsp;·&nbsp; MEDIA CREW &nbsp;·&nbsp;
+      BRAND PARTNERS &nbsp;·&nbsp; MELBOURNE &nbsp;·&nbsp; STAY CURIOUS &nbsp;·&nbsp;
+      KEEP LEARNING &nbsp;·&nbsp; CREATE IMPACT &nbsp;·&nbsp;
+    </span>
+  </div>
 
-Instagram:
-@thecuriousclub.media
+  <!-- ── Section heading ── -->
+  <div class="section-head" style="margin-top: 64px;">
+    <h2>How would you like<br />to get involved?</h2>
+    <p>Everyone is welcome. Pick what feels right for you.</p>
+  </div>
 
-</footer>
+  <!-- ── 4 Cards ── -->
+  <div class="cards">
 
+    <!-- 1 · Podcast Guest (featured) -->
+    <div class="card featured">
+      <div class="card-icon">🎙️</div>
+      <div class="card-label">Apply now</div>
+      <h3>Be a Podcast Guest</h3>
+      <p class="card-desc">
+        Share your story. No huge following required —
+        we're interested in your thinking.
+      </p>
+      <ul class="card-perks">
+        <li>Full podcast episode</li>
+        <li>Behind-the-scenes documentary</li>
+        <li>Short-form social clips</li>
+        <li>Professional photos</li>
+        <li>Content to reuse</li>
+      </ul>
+      <a class="btn btn-pink" href="https://tally.so/r/REPLACE_GUEST_FORM" target="_blank">
+        Apply as a Guest →
+      </a>
+    </div>
+
+    <!-- 2 · Media Crew -->
+    <div class="card">
+      <div class="card-icon">🎥</div>
+      <div class="card-label">Join the team</div>
+      <h3>Join the Media Crew</h3>
+      <p class="card-desc">
+        Creatives, filmmakers, and students — help us tell meaningful stories
+        and build your portfolio.
+      </p>
+      <ul class="card-perks">
+        <li>Full credit on published work</li>
+        <li>Real portfolio material</li>
+        <li>Behind-the-scenes experience</li>
+        <li>Networking opportunities</li>
+        <li>Recommendation for standouts</li>
+      </ul>
+      <a class="btn" href="https://tally.so/r/REPLACE_CREW_FORM" target="_blank">
+        Join the Crew →
+      </a>
+    </div>
+
+    <!-- 3 · Partner -->
+    <div class="card">
+      <div class="card-icon">🤝</div>
+      <div class="card-label">Collaborate</div>
+      <h3>Partner With Us</h3>
+      <p class="card-desc">
+        Brands and communities who want to support conversations that matter
+        and reach curious minds.
+      </p>
+      <ul class="card-perks">
+        <li>Sponsored episodes</li>
+        <li>Community events &amp; workshops</li>
+        <li>Brand collaborations</li>
+        <li>Venue partnerships</li>
+        <li>Affiliate opportunities</li>
+      </ul>
+      <a class="btn" href="https://tally.so/r/REPLACE_PARTNER_FORM" target="_blank">
+        Partner With Us →
+      </a>
+    </div>
+
+    <!-- 4 · Follow (div not anchor — multiple links inside) -->
+    <div class="card">
+      <div class="card-icon">✨</div>
+      <div class="card-label">Follow along</div>
+      <h3>Follow Our Journey</h3>
+      <p class="card-desc">
+        Not ready to apply? Come follow along and stay curious with us.
+      </p>
+      <ul class="card-perks">
+        <li>Episodes on YouTube</li>
+        <li>Behind-the-scenes on Instagram</li>
+        <li>Weekly inspiration &amp; stories</li>
+        <li>Community updates</li>
+      </ul>
+      <div class="btn-stack">
+        <a class="btn" href="https://www.instagram.com/thecuriousclub.media" target="_blank">
+          ♥ &nbsp;Instagram
+        </a>
+        <a class="btn" href="https://www.youtube.com/@TheCuriousClubMedia" target="_blank">
+          ▶ &nbsp;YouTube
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /cards -->
+
+  <!-- ── About strip ── -->
+  <section class="about">
+    <h2>"No scripts. No performance.<br />Just a genuine conversation."</h2>
+    <p>
+      Every creator has a story worth learning from. The Curious Club goes beyond
+      the highlights to explore the thinking, failures, habits, and decisions
+      behind meaningful work.
+    </p>
+    <p>
+      We're curious about founders, artists, researchers, educators, makers —
+      anyone building something meaningful.
+    </p>
+    <div class="topics">
+      <span class="tag">Entrepreneurship</span>
+      <span class="tag">Creativity</span>
+      <span class="tag">AI</span>
+      <span class="tag">Design</span>
+      <span class="tag">Education</span>
+      <span class="tag">Mental Health</span>
+      <span class="tag">Startups</span>
+      <span class="tag">Marketing</span>
+      <span class="tag">Career</span>
+      <span class="tag">Productivity</span>
+      <span class="tag">Travel</span>
+    </div>
+  </section>
+
+  <!-- ── Social strip ── -->
+  <section class="social">
+    <p>Find us online</p>
+    <div class="social-links">
+      <a class="social-link" href="https://www.instagram.com/thecuriousclub.media" target="_blank">
+        ♥ &nbsp;Instagram
+      </a>
+      <a class="social-link" href="https://www.youtube.com/@TheCuriousClubMedia" target="_blank">
+        ▶ &nbsp;YouTube
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Bottom hearts strip ── -->
+  <div class="hearts-strip">
+    ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-logo">The Curious Club</div>
+    <div class="footer-hearts">♥ ♥ ♥</div>
+    <div class="footer-info">
+      Melbourne · Podcast &amp; Media<br />
+      Stay Curious · Keep Learning · Create Impact
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════
+       Heart Storm — canvas particle effect
+  ══════════════════════════════════════════════ -->
+  <script>
+    /* ── Heart particle ── */
+    class Heart {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size   = Math.random() * 22 + 10;
+        this.alpha  = 0.9 + Math.random() * 0.1;
+        this.vx     = (Math.random() - 0.5) * 2.4;
+        this.vy     = -(Math.random() * 2.8 + 0.8);
+        this.spin   = (Math.random() - 0.5) * 0.08;
+        this.angle  = Math.random() * Math.PI * 2;
+        this.wobble = Math.random() * Math.PI * 2;
+        // slight pink variation
+        const hues  = ['#e8437a', '#f06292', '#ff8fb1', '#ec407a', '#ff4081'];
+        this.color  = hues[Math.floor(Math.random() * hues.length)];
+      }
+
+      update() {
+        this.wobble += 0.06;
+        this.x     += this.vx + Math.sin(this.wobble) * 0.4;
+        this.y     += this.vy;
+        this.vy    -= 0.04;          // accelerate upward
+        this.alpha -= 0.018;
+        this.angle += this.spin;
+      }
+
+      draw(ctx) {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.font = `${this.size}px serif`;
+        ctx.fillStyle = this.color;
+        ctx.textAlign    = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('♥', 0, 0);
+        ctx.restore();
+      }
+
+      isDead() { return this.alpha <= 0; }
+    }
+
+    /* ── Canvas setup ── */
+    const canvas = document.getElementById('heart-canvas');
+    const ctx    = canvas.getContext('2d');
+    let   hearts = [];
+    let   lastSpawn = 0;
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    /* Spawn hearts on mouse move */
+    let mx = 0, my = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX;
+      my = e.clientY;
+      const now = Date.now();
+      if (now - lastSpawn > 35) {          // throttle: 1 heart per 35 ms
+        lastSpawn = now;
+        hearts.push(new Heart(mx, my));
+        if (Math.random() < 0.3) {          // 30% chance of a bonus heart
+          hearts.push(new Heart(mx + (Math.random()-0.5)*20, my + (Math.random()-0.5)*20));
+        }
+      }
+    });
+
+    /* Animation loop */
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts = hearts.filter(h => !h.isDead());
+      hearts.forEach(h => { h.update(); h.draw(ctx); });
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+
+    /* ── Scroll-in animation for cards ── */
+    const cards = document.querySelectorAll('.card');
+    const obs   = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    cards.forEach(c => obs.observe(c));
+  </script>
 </body>
 </html>
